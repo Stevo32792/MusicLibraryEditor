@@ -30,13 +30,18 @@
         {
             this.gbFileList = new System.Windows.Forms.GroupBox();
             this.gbMetadata = new System.Windows.Forms.GroupBox();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lstTagList = new System.Windows.Forms.ListBox();
+            this.picAlbumArt = new System.Windows.Forms.PictureBox();
+            this.gbFileList.SuspendLayout();
             this.gbMetadata.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).BeginInit();
             this.SuspendLayout();
             // 
             // gbFileList
             // 
+            this.gbFileList.Controls.Add(this.picAlbumArt);
             this.gbFileList.Location = new System.Drawing.Point(12, 12);
             this.gbFileList.Name = "gbFileList";
             this.gbFileList.Size = new System.Drawing.Size(178, 416);
@@ -46,6 +51,7 @@
             // 
             // gbMetadata
             // 
+            this.gbMetadata.Controls.Add(this.lstTagList);
             this.gbMetadata.Controls.Add(this.txtTitle);
             this.gbMetadata.Controls.Add(this.lblTitle);
             this.gbMetadata.Location = new System.Drawing.Point(196, 12);
@@ -54,6 +60,13 @@
             this.gbMetadata.TabIndex = 1;
             this.gbMetadata.TabStop = false;
             this.gbMetadata.Text = "Metadata";
+            // 
+            // txtTitle
+            // 
+            this.txtTitle.Location = new System.Drawing.Point(42, 27);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.Size = new System.Drawing.Size(367, 20);
+            this.txtTitle.TabIndex = 1;
             // 
             // lblTitle
             // 
@@ -64,12 +77,22 @@
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Title:";
             // 
-            // txtTitle
+            // lstTagList
             // 
-            this.txtTitle.Location = new System.Drawing.Point(42, 27);
-            this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(367, 20);
-            this.txtTitle.TabIndex = 1;
+            this.lstTagList.FormattingEnabled = true;
+            this.lstTagList.Location = new System.Drawing.Point(6, 53);
+            this.lstTagList.Name = "lstTagList";
+            this.lstTagList.Size = new System.Drawing.Size(403, 368);
+            this.lstTagList.TabIndex = 2;
+            // 
+            // picAlbumArt
+            // 
+            this.picAlbumArt.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picAlbumArt.Location = new System.Drawing.Point(6, 231);
+            this.picAlbumArt.Name = "picAlbumArt";
+            this.picAlbumArt.Size = new System.Drawing.Size(166, 179);
+            this.picAlbumArt.TabIndex = 0;
+            this.picAlbumArt.TabStop = false;
             // 
             // Form1
             // 
@@ -81,8 +104,10 @@
             this.Name = "Form1";
             this.Text = "Music Library Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.gbFileList.ResumeLayout(false);
             this.gbMetadata.ResumeLayout(false);
             this.gbMetadata.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -93,6 +118,8 @@
         private System.Windows.Forms.GroupBox gbMetadata;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.ListBox lstTagList;
+        private System.Windows.Forms.PictureBox picAlbumArt;
     }
 }
 
