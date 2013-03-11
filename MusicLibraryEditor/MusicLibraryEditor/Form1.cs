@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TagLib;
 
 namespace MusicLibraryEditor
 {
@@ -15,6 +16,12 @@ namespace MusicLibraryEditor
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            TagLib.File track = TagLib.File.Create("test.mp3");
+            txtTitle.Text = track.Tag.Title;
         }
     }
 }
