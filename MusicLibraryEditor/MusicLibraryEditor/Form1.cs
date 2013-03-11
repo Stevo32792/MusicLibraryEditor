@@ -132,7 +132,13 @@ namespace MusicLibraryEditor
             string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
             string[] folders = Directory.GetDirectories(FolderBrowser.SelectedPath.ToString());
             lstFileLIst.Items.Clear();
-            lstFileLIst.Items.Add("...");
+            if (Regex.Match(FolderBrowser.SelectedPath.ToString(), @".*\\([^\\]+$)").Groups[1].Value == "")
+            {
+            }
+            else
+            {
+                lstFileLIst.Items.Add("...");
+            }
             foreach (string folder in folders)
             {
                 lstFileLIst.Items.Add("Folder: " + Regex.Match(folder, @".*\\([^\\]+$)").Groups[1].Value);
