@@ -34,27 +34,37 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.lstTagList = new System.Windows.Forms.ListBox();
             this.picAlbumArt = new System.Windows.Forms.PictureBox();
+            this.FolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.lstFileLIst = new System.Windows.Forms.ListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbFileList.SuspendLayout();
             this.gbMetadata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbFileList
             // 
-            this.gbFileList.Controls.Add(this.picAlbumArt);
-            this.gbFileList.Location = new System.Drawing.Point(12, 12);
+            this.gbFileList.Controls.Add(this.lstFileLIst);
+            this.gbFileList.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gbFileList.Location = new System.Drawing.Point(0, 24);
             this.gbFileList.Name = "gbFileList";
-            this.gbFileList.Size = new System.Drawing.Size(178, 416);
+            this.gbFileList.Size = new System.Drawing.Size(194, 416);
             this.gbFileList.TabIndex = 0;
             this.gbFileList.TabStop = false;
             this.gbFileList.Text = "File List";
             // 
             // gbMetadata
             // 
+            this.gbMetadata.Controls.Add(this.picAlbumArt);
             this.gbMetadata.Controls.Add(this.lstTagList);
             this.gbMetadata.Controls.Add(this.txtTitle);
             this.gbMetadata.Controls.Add(this.lblTitle);
-            this.gbMetadata.Location = new System.Drawing.Point(196, 12);
+            this.gbMetadata.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMetadata.Location = new System.Drawing.Point(200, 24);
             this.gbMetadata.Name = "gbMetadata";
             this.gbMetadata.Size = new System.Drawing.Size(415, 416);
             this.gbMetadata.TabIndex = 1;
@@ -82,25 +92,68 @@
             this.lstTagList.FormattingEnabled = true;
             this.lstTagList.Location = new System.Drawing.Point(6, 53);
             this.lstTagList.Name = "lstTagList";
-            this.lstTagList.Size = new System.Drawing.Size(403, 368);
+            this.lstTagList.Size = new System.Drawing.Size(403, 329);
             this.lstTagList.TabIndex = 2;
             // 
             // picAlbumArt
             // 
             this.picAlbumArt.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picAlbumArt.Location = new System.Drawing.Point(6, 231);
+            this.picAlbumArt.Location = new System.Drawing.Point(264, 394);
             this.picAlbumArt.Name = "picAlbumArt";
-            this.picAlbumArt.Size = new System.Drawing.Size(166, 179);
+            this.picAlbumArt.Size = new System.Drawing.Size(182, 179);
             this.picAlbumArt.TabIndex = 0;
             this.picAlbumArt.TabStop = false;
+            // 
+            // lstFileLIst
+            // 
+            this.lstFileLIst.FormattingEnabled = true;
+            this.lstFileLIst.Location = new System.Drawing.Point(6, 19);
+            this.lstFileLIst.Name = "lstFileLIst";
+            this.lstFileLIst.Size = new System.Drawing.Size(182, 394);
+            this.lstFileLIst.TabIndex = 0;
+            this.lstFileLIst.SelectedIndexChanged += new System.EventHandler(this.lstFileLIst_SelectedIndexChanged);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(615, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFolderToolStripMenuItem,
+            this.openFileToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openFolderToolStripMenuItem
+            // 
+            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openFolderToolStripMenuItem.Text = "Open Folder";
+            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openFileToolStripMenuItem.Text = "Open File";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 440);
+            this.ClientSize = new System.Drawing.Size(615, 440);
             this.Controls.Add(this.gbMetadata);
             this.Controls.Add(this.gbFileList);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Music Library Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -108,7 +161,10 @@
             this.gbMetadata.ResumeLayout(false);
             this.gbMetadata.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -120,6 +176,12 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.ListBox lstTagList;
         private System.Windows.Forms.PictureBox picAlbumArt;
+        private System.Windows.Forms.ListBox lstFileLIst;
+        private System.Windows.Forms.FolderBrowserDialog FolderBrowser;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
     }
 }
 

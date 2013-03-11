@@ -19,13 +19,22 @@ namespace MusicLibraryEditor
             InitializeComponent();
         }
 
+
+        /* 
+         * Form1_Load will load the information from test.mp3 using the
+         * LoadTags function. This is subject to change later, and may
+         * end up loading the most recently loaded folder and file into the form 
+         */
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadTags();
+            LoadTags("test.mp3");
         }
-        private void LoadTags()
+
+        /* LoadTags will load every tag from the file in filename and add it to lstTagList*/
+        private void LoadTags(string filename)
         {
-            TagLib.File track = TagLib.File.Create("test.mp3");
+            TagLib.File track = TagLib.File.Create(filename);
+            lstTagList.Items.Clear();
             lstTagList.Items.Add("Album: " + track.Tag.Album);
             lstTagList.Items.Add("AlbumArtist: " + track.Tag.AlbumArtists);
             lstTagList.Items.Add("AlbumArtistSort: " + track.Tag.AlbumArtistsSort);
@@ -88,6 +97,30 @@ namespace MusicLibraryEditor
                     picAlbumArt.Image = currentImage.GetThumbnailImage(100, 100, null, System.IntPtr.Zero);
                 }
                 ms.Close();
+            }
+        }
+
+        /* Loads files from FolderBrowser into lstFileLIst */
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowser.ShowDialog();
+            string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
+            lstFileLIst.Items.Clear();
+            foreach (string filename in filenames)
+            {
+                lstFileLIst.Items.Add(filename);
+            }
+        }
+
+        /* When file in lstFileLIst is selected, the information from that file is loaded with LoadTags */
+        private void lstFileLIst_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstFileLIst.SelectedItem == null)
+            {
+            }
+            else
+            {
+                LoadTags(lstFileLIst.SelectedItem.ToString());
             }
         }
     }
