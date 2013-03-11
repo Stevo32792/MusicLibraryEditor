@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 using TagLib;
 
 namespace MusicLibraryEditor
@@ -18,7 +19,6 @@ namespace MusicLibraryEditor
         {
             InitializeComponent();
         }
-
 
         /* 
          * Form1_Load will load the information from test.mp3 using the
@@ -98,6 +98,10 @@ namespace MusicLibraryEditor
                 }
                 ms.Close();
             }
+            else
+            {
+                picAlbumArt.Image = null;
+            }
         }
 
         /* Loads files from FolderBrowser into lstFileLIst */
@@ -108,7 +112,7 @@ namespace MusicLibraryEditor
             lstFileLIst.Items.Clear();
             foreach (string filename in filenames)
             {
-                lstFileLIst.Items.Add(filename);
+                lstFileLIst.Items.Add(Regex.Match(filename, @".*\\([^\\]+$)").Groups[1].Value);
             }
         }
 
@@ -120,7 +124,7 @@ namespace MusicLibraryEditor
             }
             else
             {
-                LoadTags(lstFileLIst.SelectedItem.ToString());
+                LoadTags(FolderBrowser.SelectedPath.ToString() + "\\" + lstFileLIst.SelectedItem.ToString());
             }
         }
     }
