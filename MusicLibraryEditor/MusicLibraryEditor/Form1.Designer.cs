@@ -52,17 +52,18 @@
             this.gbFileList.Dock = System.Windows.Forms.DockStyle.Left;
             this.gbFileList.Location = new System.Drawing.Point(0, 24);
             this.gbFileList.Name = "gbFileList";
-            this.gbFileList.Size = new System.Drawing.Size(194, 416);
+            this.gbFileList.Size = new System.Drawing.Size(370, 416);
             this.gbFileList.TabIndex = 0;
             this.gbFileList.TabStop = false;
             this.gbFileList.Text = "File List";
             // 
             // lstFileLIst
             // 
+            this.lstFileLIst.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstFileLIst.FormattingEnabled = true;
-            this.lstFileLIst.Location = new System.Drawing.Point(6, 19);
+            this.lstFileLIst.Location = new System.Drawing.Point(3, 16);
             this.lstFileLIst.Name = "lstFileLIst";
-            this.lstFileLIst.Size = new System.Drawing.Size(182, 394);
+            this.lstFileLIst.Size = new System.Drawing.Size(364, 397);
             this.lstFileLIst.TabIndex = 0;
             this.lstFileLIst.SelectedIndexChanged += new System.EventHandler(this.lstFileLIst_SelectedIndexChanged);
             // 
@@ -73,7 +74,7 @@
             this.gbMetadata.Controls.Add(this.txtTitle);
             this.gbMetadata.Controls.Add(this.lblTitle);
             this.gbMetadata.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gbMetadata.Location = new System.Drawing.Point(200, 24);
+            this.gbMetadata.Location = new System.Drawing.Point(376, 24);
             this.gbMetadata.Name = "gbMetadata";
             this.gbMetadata.Size = new System.Drawing.Size(415, 416);
             this.gbMetadata.TabIndex = 1;
@@ -95,7 +96,7 @@
             this.lstTagList.FormattingEnabled = true;
             this.lstTagList.Location = new System.Drawing.Point(6, 45);
             this.lstTagList.Name = "lstTagList";
-            this.lstTagList.Size = new System.Drawing.Size(403, 368);
+            this.lstTagList.Size = new System.Drawing.Size(403, 394);
             this.lstTagList.TabIndex = 2;
             // 
             // txtTitle
@@ -120,7 +121,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(615, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(791, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -150,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 440);
+            this.ClientSize = new System.Drawing.Size(791, 440);
             this.Controls.Add(this.gbMetadata);
             this.Controls.Add(this.gbFileList);
             this.Controls.Add(this.menuStrip1);
