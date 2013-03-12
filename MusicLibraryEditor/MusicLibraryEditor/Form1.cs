@@ -20,14 +20,8 @@ namespace MusicLibraryEditor
             InitializeComponent();
         }
 
-        /* 
-         * Form1_Load will load the information from test.mp3 using the
-         * LoadTags function. This is subject to change later, and may
-         * end up loading the most recently loaded folder and file into the form 
-         */
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadTags("test.mp3");
         }
 
         /* LoadTags will load every tag from the file in filename and add it to lstTagList*/
@@ -108,12 +102,7 @@ namespace MusicLibraryEditor
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FolderBrowser.ShowDialog();
-            string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
-            lstFileLIst.Items.Clear();
-            foreach (string filename in filenames)
-            {
-                lstFileLIst.Items.Add(Regex.Match(filename, @".*\\([^\\]+$)").Groups[1].Value);
-            }
+            load_directory();
         }
 
         /* When file in lstFileLIst is selected, the information from that file is loaded with LoadTags */
@@ -122,9 +111,35 @@ namespace MusicLibraryEditor
             if (lstFileLIst.SelectedItem == null)
             {
             }
-            else
+            else if (Regex.Match(lstFileLIst.SelectedItem.ToString(), @"File").Groups[0].Value == "File") 
             {
-                LoadTags(FolderBrowser.SelectedPath.ToString() + "\\" + lstFileLIst.SelectedItem.ToString());
+                LoadTags(FolderBrowser.SelectedPath.ToString() + "\\" + lstFileLIst.SelectedItem.ToString().Substring(6));
+            }
+            else if (Regex.Match(lstFileLIst.SelectedItem.ToString(), @"Folder").Groups[0].Value == "Folder")
+            {
+                FolderBrowser.SelectedPath = (FolderBrowser.SelectedPath.ToString() + "\\" + lstFileLIst.SelectedItem.ToString().Substring(8));
+                load_directory();
+            }
+            else if (lstFileLIst.SelectedItem.ToString() == "...")
+            {
+                FolderBrowser.SelectedPath = Directory.GetParent(FolderBrowser.SelectedPath.ToString()).ToString();
+                load_directory();
+            }
+        }
+
+        private void load_directory()
+        {
+            string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
+            string[] folders = Directory.GetDirectories(FolderBrowser.SelectedPath.ToString());
+            lstFileLIst.Items.Clear();
+            lstFileLIst.Items.Add("...");
+            foreach (string folder in folders)
+            {
+                lstFileLIst.Items.Add("Folder: " + Regex.Match(folder, @".*\\([^\\]+$)").Groups[1].Value);
+            }
+            foreach (string filename in filenames)
+            {
+                lstFileLIst.Items.Add("File: " + Regex.Match(filename, @".*\\([^\\]+$)").Groups[1].Value);
             }
         }
     }
