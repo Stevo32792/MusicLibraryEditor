@@ -40,6 +40,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileBrowser = new System.Windows.Forms.OpenFileDialog();
             this.gbFileList.SuspendLayout();
             this.gbMetadata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).BeginInit();
@@ -137,15 +138,21 @@
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openFileToolStripMenuItem.Text = "Open File";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // FileBrowser
+            // 
+            this.FileBrowser.FileName = "openFileDialog1";
+            this.FileBrowser.Filter = "MP3 File (*.mp3)|*.mp3";
             // 
             // Form1
             // 
@@ -184,6 +191,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog FileBrowser;
     }
 }
 

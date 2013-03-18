@@ -105,6 +105,12 @@ namespace MusicLibraryEditor
             load_directory();
         }
 
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FileBrowser.ShowDialog();
+            load_file();
+        }
+
         /* When file in lstFileLIst is selected, the information from that file is loaded with LoadTags */
         private void lstFileLIst_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -129,24 +135,32 @@ namespace MusicLibraryEditor
 
         private void load_directory()
         {
-            string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
-            string[] folders = Directory.GetDirectories(FolderBrowser.SelectedPath.ToString());
-            lstFileLIst.Items.Clear();
-            if (Regex.Match(FolderBrowser.SelectedPath.ToString(), @".*\\([^\\]+$)").Groups[1].Value == "")
+            if (FolderBrowser.SelectedPath.ToString() != "")
             {
+                string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
+                string[] folders = Directory.GetDirectories(FolderBrowser.SelectedPath.ToString());
+                lstFileLIst.Items.Clear();
+                if (Regex.Match(FolderBrowser.SelectedPath.ToString(), @".*\\([^\\]+$)").Groups[1].Value == "")
+                {
+                }
+                else
+                {
+                    lstFileLIst.Items.Add("...");
+                }
+                foreach (string folder in folders)
+                {
+                    lstFileLIst.Items.Add("Folder: " + Regex.Match(folder, @".*\\([^\\]+$)").Groups[1].Value);
+                }
+                foreach (string filename in filenames)
+                {
+                    lstFileLIst.Items.Add("File: " + Regex.Match(filename, @".*\\([^\\]+$)").Groups[1].Value);
+                }
             }
-            else
-            {
-                lstFileLIst.Items.Add("...");
-            }
-            foreach (string folder in folders)
-            {
-                lstFileLIst.Items.Add("Folder: " + Regex.Match(folder, @".*\\([^\\]+$)").Groups[1].Value);
-            }
-            foreach (string filename in filenames)
-            {
-                lstFileLIst.Items.Add("File: " + Regex.Match(filename, @".*\\([^\\]+$)").Groups[1].Value);
-            }
+        }
+
+        private void load_file()
+        {
+
         }
     }
 }
