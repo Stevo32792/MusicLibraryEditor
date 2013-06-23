@@ -22,6 +22,16 @@ namespace MusicLibraryEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Directory.CreateDirectory("C:\\test");
+            if (!System.IO.File.Exists("C:\\test\\hello.mp3"))
+            {
+                System.IO.File.Copy("C:\\test.mp3", "C:\\test\\hello.mp3");
+                System.IO.File.Delete("C:\\test.mp3");
+            }
+            else
+            {
+                MessageBox.Show("File Exists");
+            }
         }
 
         /* LoadTags will load every tag from the file in filename and add it to lstTagList*/
