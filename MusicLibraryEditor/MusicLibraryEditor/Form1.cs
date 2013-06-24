@@ -22,6 +22,17 @@ namespace MusicLibraryEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.libraryLocation == "" && !Directory.Exists(Properties.Settings.Default.libraryLocation))
+            {
+                FolderBrowser.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+                Properties.Settings.Default.libraryLocation = FolderBrowser.SelectedPath;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                FolderBrowser.SelectedPath = Properties.Settings.Default.libraryLocation;
+            }
+            load_directory();
             //Directory.CreateDirectory("C:\\test");
             //if (!System.IO.File.Exists("C:\\test\\hello.mp3"))
             //{
@@ -129,14 +140,20 @@ namespace MusicLibraryEditor
         /* Loads files from FolderBrowser into lstFileLIst */
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FolderBrowser.ShowDialog();
-            load_directory();
+            DialogResult result = FolderBrowser.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                load_directory();
+            }
         }
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FileBrowser.ShowDialog();
-            load_file();
+            DialogResult result = FileBrowser.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                load_file();
+            }
         }
 
         /* When file in lstFileLIst is selected, the information from that file is loaded with LoadTags */
@@ -189,6 +206,24 @@ namespace MusicLibraryEditor
         private void load_file()
         {
 
+        }
+
+        private void setLibraryFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowser.SelectedPath = Properties.Settings.Default.libraryLocation;
+            DialogResult result = FolderBrowser.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Properties.Settings.Default.libraryLocation = FolderBrowser.SelectedPath;
+                Properties.Settings.Default.Save();
+            }
+            load_directory();
+            string[] files = Directory.GetFiles(Properties.Settings.Default.libraryLocation, "*.*",  SearchOption.AllDirectories);
+            Properties.Settings.Default.libraryFiles.Clear();
+            foreach (string element in files)
+            {
+                Properties.Settings.Default.libraryFiles.Add(element);
+            }
         }
     }
 }
