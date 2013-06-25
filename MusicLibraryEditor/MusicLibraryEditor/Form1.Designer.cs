@@ -40,8 +40,9 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileBrowser = new System.Windows.Forms.OpenFileDialog();
             this.setLibraryFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileBrowser = new System.Windows.Forms.OpenFileDialog();
+            this.sortFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbFileList.SuspendLayout();
             this.gbMetadata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).BeginInit();
@@ -126,7 +127,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.sortFilesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(791, 24);
@@ -157,17 +159,24 @@
             this.openFileToolStripMenuItem.Text = "Open File";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
-            // FileBrowser
-            // 
-            this.FileBrowser.FileName = "openFileDialog1";
-            this.FileBrowser.Filter = "MP3 File (*.mp3)|*.mp3";
-            // 
             // setLibraryFolderToolStripMenuItem
             // 
             this.setLibraryFolderToolStripMenuItem.Name = "setLibraryFolderToolStripMenuItem";
             this.setLibraryFolderToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.setLibraryFolderToolStripMenuItem.Text = "Set Library Folder";
             this.setLibraryFolderToolStripMenuItem.Click += new System.EventHandler(this.setLibraryFolderToolStripMenuItem_Click);
+            // 
+            // FileBrowser
+            // 
+            this.FileBrowser.FileName = "openFileDialog1";
+            this.FileBrowser.Filter = "MP3 File (*.mp3)|*.mp3";
+            // 
+            // sortFilesToolStripMenuItem
+            // 
+            this.sortFilesToolStripMenuItem.Name = "sortFilesToolStripMenuItem";
+            this.sortFilesToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.sortFilesToolStripMenuItem.Text = "Sort Files";
+            this.sortFilesToolStripMenuItem.Click += new System.EventHandler(this.sortFilesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -208,6 +217,7 @@
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog FileBrowser;
         private System.Windows.Forms.ToolStripMenuItem setLibraryFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortFilesToolStripMenuItem;
     }
 }
 

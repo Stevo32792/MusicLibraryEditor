@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections;
 using TagLib;
 
 namespace MusicLibraryEditor
@@ -215,15 +216,95 @@ namespace MusicLibraryEditor
             if (result == DialogResult.OK)
             {
                 Properties.Settings.Default.libraryLocation = FolderBrowser.SelectedPath;
-                Properties.Settings.Default.Save();
             }
             load_directory();
-            string[] files = Directory.GetFiles(Properties.Settings.Default.libraryLocation, "*.*",  SearchOption.AllDirectories);
+            getLibrary();
+        }
+
+        private void getLibrary()
+        {
+            string[] files = Directory.GetFiles(Properties.Settings.Default.libraryLocation, "*.*", SearchOption.AllDirectories);
             Properties.Settings.Default.libraryFiles.Clear();
             foreach (string element in files)
             {
                 Properties.Settings.Default.libraryFiles.Add(element);
             }
+            Properties.Settings.Default.Save();
+        }
+
+        private void sortMusic()
+        {
+            getLibrary();
+            foreach (string file in Properties.Settings.Default.libraryFiles)
+            {
+                try
+                {
+                    TagLib.File track = TagLib.File.Create(file);
+                    string[] artists = track.Tag.AlbumArtists;
+                    if (artists[0].Contains("/"))
+                    {
+                        string[] artistSplit = artists[0].Split(new char[] { '/' });
+                        artists[0] = "";
+                        foreach (string piece in artistSplit)
+                        {
+                            artists[0] += piece;
+                        }
+                    }
+                    string album = track.Tag.Album;
+                    if (album.Contains("/"))
+                    {
+                        string[] albumSplit = album.Split(new char[] { '/' });
+                        album = "";
+                        foreach (string piece in albumSplit)
+                        {
+                            album += piece;
+                        }
+                    }
+                    Directory.CreateDirectory(Properties.Settings.Default.libraryLocation + "\\" + artists[0]);
+                    Directory.CreateDirectory(Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")");
+                    if (!System.IO.File.Exists(Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")\\" + track.Tag.Track + " - " + track.Tag.Title + ".mp3"))
+                    {
+                        System.IO.File.Move(file, Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")\\" + track.Tag.Track + " - " + track.Tag.Title + ".mp3");
+                    }
+                }
+                catch
+                {
+                    
+                }
+            }
+        }
+
+        private void deleteEmptyFolders()
+        {
+            string[] mp3Folders = Directory.GetDirectories(Properties.Settings.Default.libraryLocation, "*.mp3", SearchOption.AllDirectories);
+            string[] allFolders = Directory.GetDirectories(Properties.Settings.Default.libraryLocation, "*.*", SearchOption.AllDirectories);
+            ArrayList emptyFolders = new ArrayList();
+            foreach (string allFolder in allFolders)
+            {
+                bool found = false;
+                foreach (string mp3Folder in mp3Folders)
+                {
+                    if (mp3Folder == allFolder)
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    emptyFolders.Add(allFolder);
+                }
+            }
+            foreach (string emptyFolder in emptyFolders)
+            {
+                System.IO.Directory.Delete(emptyFolder);
+            }
+        }
+
+        private void sortFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sortMusic();
+            //deleteEmptyFolders();
+            load_directory();
         }
     }
 }
