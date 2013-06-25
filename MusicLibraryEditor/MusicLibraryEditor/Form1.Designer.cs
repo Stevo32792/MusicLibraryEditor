@@ -41,12 +41,15 @@
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setLibraryFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileBrowser = new System.Windows.Forms.OpenFileDialog();
             this.sortFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileBrowser = new System.Windows.Forms.OpenFileDialog();
+            this.folderWatcher = new System.IO.FileSystemWatcher();
             this.gbFileList.SuspendLayout();
             this.gbMetadata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.folderWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // gbFileList
@@ -128,7 +131,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.sortFilesToolStripMenuItem});
+            this.sortFilesToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(791, 24);
@@ -166,17 +170,30 @@
             this.setLibraryFolderToolStripMenuItem.Text = "Set Library Folder";
             this.setLibraryFolderToolStripMenuItem.Click += new System.EventHandler(this.setLibraryFolderToolStripMenuItem_Click);
             // 
-            // FileBrowser
-            // 
-            this.FileBrowser.FileName = "openFileDialog1";
-            this.FileBrowser.Filter = "MP3 File (*.mp3)|*.mp3";
-            // 
             // sortFilesToolStripMenuItem
             // 
             this.sortFilesToolStripMenuItem.Name = "sortFilesToolStripMenuItem";
             this.sortFilesToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.sortFilesToolStripMenuItem.Text = "Sort Files";
             this.sortFilesToolStripMenuItem.Click += new System.EventHandler(this.sortFilesToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // FileBrowser
+            // 
+            this.FileBrowser.FileName = "openFileDialog1";
+            this.FileBrowser.Filter = "MP3 File (*.mp3)|*.mp3";
+            // 
+            // folderWatcher
+            // 
+            this.folderWatcher.EnableRaisingEvents = true;
+            this.folderWatcher.IncludeSubdirectories = true;
+            this.folderWatcher.SynchronizingObject = this;
+            this.folderWatcher.Changed += new System.IO.FileSystemEventHandler(this.folderWatcher_Changed);
             // 
             // Form1
             // 
@@ -196,6 +213,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.folderWatcher)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,6 +236,8 @@
         private System.Windows.Forms.OpenFileDialog FileBrowser;
         private System.Windows.Forms.ToolStripMenuItem setLibraryFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortFilesToolStripMenuItem;
+        private System.IO.FileSystemWatcher folderWatcher;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

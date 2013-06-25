@@ -23,15 +23,17 @@ namespace MusicLibraryEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.libraryLocation == "" && !Directory.Exists(Properties.Settings.Default.libraryLocation))
+            if (Properties.Settings.Default.libraryLocation == "" || !Directory.Exists(Properties.Settings.Default.libraryLocation))
             {
                 FolderBrowser.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+                folderWatcher.Path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 Properties.Settings.Default.libraryLocation = FolderBrowser.SelectedPath;
                 Properties.Settings.Default.Save();
             }
             else
             {
                 FolderBrowser.SelectedPath = Properties.Settings.Default.libraryLocation;
+                folderWatcher.Path = Properties.Settings.Default.libraryLocation;
             }
             load_directory();
             //Directory.CreateDirectory("C:\\test");
@@ -181,6 +183,7 @@ namespace MusicLibraryEditor
 
         private void load_directory()
         {
+            folderWatcher.Path = FolderBrowser.SelectedPath;
             if (FolderBrowser.SelectedPath.ToString() != "")
             {
                 string[] filenames = Directory.GetFiles(FolderBrowser.SelectedPath.ToString());
@@ -234,11 +237,12 @@ namespace MusicLibraryEditor
 
         private void sortMusic()
         {
+            folderWatcher.EnableRaisingEvents = false;
             getLibrary();
             foreach (string file in Properties.Settings.Default.libraryFiles)
             {
-                try
-                {
+                //try
+                //{
                     TagLib.File track = TagLib.File.Create(file);
                     string[] artists = track.Tag.AlbumArtists;
                     if (artists[0].Contains("/"))
@@ -266,12 +270,13 @@ namespace MusicLibraryEditor
                     {
                         System.IO.File.Move(file, Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")\\" + track.Tag.Track + " - " + track.Tag.Title + ".mp3");
                     }
-                }
-                catch
-                {
-                    
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.ToString());
+                //}
             }
+            folderWatcher.EnableRaisingEvents = true;
         }
 
         private void deleteEmptyFolders()
@@ -302,8 +307,18 @@ namespace MusicLibraryEditor
 
         private void sortFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Sorting Music will Permanently Change Folder Structers, it is Recommended to Backup your Music Before Running this for the First Time!", "Warning!", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Cancel || result == DialogResult.No)
+            {
+                return;
+            }
             sortMusic();
             //deleteEmptyFolders();
+            load_directory();
+        }
+
+        private void folderWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
             load_directory();
         }
     }
