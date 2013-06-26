@@ -11,6 +11,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections;
 using TagLib;
+using System.Threading;
 
 namespace MusicLibraryEditor
 {
@@ -239,44 +240,101 @@ namespace MusicLibraryEditor
         {
             folderWatcher.EnableRaisingEvents = false;
             getLibrary();
+            int i = Properties.Settings.Default.libraryFiles.Count;
+            this.Invoke((MethodInvoker)delegate { formTitleChange("Music Library Editor" + i.ToString()); });
             foreach (string file in Properties.Settings.Default.libraryFiles)
             {
-                //try
-                //{
-                    TagLib.File track = TagLib.File.Create(file);
-                    string[] artists = track.Tag.AlbumArtists;
-                    if (artists[0].Contains("/"))
+                try
+                {
+                    if (file.EndsWith(".mp3"))
                     {
-                        string[] artistSplit = artists[0].Split(new char[] { '/' });
-                        artists[0] = "";
-                        foreach (string piece in artistSplit)
+                        TagLib.File track = TagLib.File.Create(file);
+                        string[] artists = track.Tag.AlbumArtists;
+                        if (artists.Length != 0)
                         {
-                            artists[0] += piece;
+                            if (artists[0].Contains("/"))
+                            {
+                                string[] artistSplit = artists[0].Split(new char[] { '/' });
+                                artists[0] = "";
+                                foreach (string piece in artistSplit)
+                                {
+                                    artists[0] += piece;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            artists = new string[] {"Unknown Artist"};
+                        }
+                        string album = track.Tag.Album;
+                        if (album != "")
+                        {
+                            if (album.Contains("/"))
+                            {
+                                string[] albumSplit = album.Split(new char[] { '/' });
+                                album = "";
+                                foreach (string piece in albumSplit)
+                                {
+                                    album += piece;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            album = "Unknown Album";
+                        }
+
+                        string artistFolder = artists[0];
+                        string albumFolder = album;
+                        if (track.Tag.Year.ToString() != "")
+                        {
+                            albumFolder = album + " (" + track.Tag.Year + ")";
+                        }
+
+                        string fileName = Path.GetFileName(track.Name);
+                        if (track.Tag.Track.ToString() != "" && track.Tag.Title != "")
+                        {
+                            fileName = track.Tag.Track + " - " + track.Tag.Title + ".mp3";
+                        }
+                        else if (track.Tag.Track.ToString() != "")
+                        {
+                            fileName = track.Tag.Title + ".mp3";
+                        }
+
+                        string illegal = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+
+                        foreach (char c in @illegal)
+                        {
+                            artistFolder = artistFolder.Replace(c.ToString(), "");
+                            albumFolder = albumFolder.Replace(c.ToString(), "");
+                            fileName = fileName.Replace(c.ToString(), "");
+                        }
+
+                        Directory.CreateDirectory(Properties.Settings.Default.libraryLocation + "\\" + artistFolder);
+                        Directory.CreateDirectory(Properties.Settings.Default.libraryLocation + "\\" + artistFolder + "\\" + albumFolder);
+                        if (!System.IO.File.Exists(Properties.Settings.Default.libraryLocation + "\\" + artistFolder + "\\" + albumFolder + "\\" + fileName))
+                        {
+                            System.IO.File.Move(file, Properties.Settings.Default.libraryLocation + "\\" + artistFolder + "\\" + albumFolder + "\\" + fileName);
                         }
                     }
-                    string album = track.Tag.Album;
-                    if (album.Contains("/"))
-                    {
-                        string[] albumSplit = album.Split(new char[] { '/' });
-                        album = "";
-                        foreach (string piece in albumSplit)
-                        {
-                            album += piece;
-                        }
-                    }
-                    Directory.CreateDirectory(Properties.Settings.Default.libraryLocation + "\\" + artists[0]);
-                    Directory.CreateDirectory(Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")");
-                    if (!System.IO.File.Exists(Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")\\" + track.Tag.Track + " - " + track.Tag.Title + ".mp3"))
-                    {
-                        System.IO.File.Move(file, Properties.Settings.Default.libraryLocation + "\\" + artists[0] + "\\" + album + " (" + track.Tag.Year + ")\\" + track.Tag.Track + " - " + track.Tag.Title + ".mp3");
-                    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.ToString());
-                //}
+                }
+                catch
+                {
+                    //this.Invoke((MethodInvoker)delegate { txtConsole.Text += ex; });
+                    this.Invoke((MethodInvoker)delegate { txtConsole.Text = "Error moving " + file + Environment.NewLine + txtConsole.Text; });
+                }
+                i--;
+                this.Invoke((MethodInvoker)delegate { formTitleChange("Music Library Editor" + i.ToString()); });
             }
             folderWatcher.EnableRaisingEvents = true;
+            this.Invoke((MethodInvoker)delegate { sortFilesToolStripMenuItem.Enabled = true; });
+            this.Invoke((MethodInvoker)delegate { setLibraryFolderToolStripMenuItem.Enabled = true; });
+            this.Invoke((MethodInvoker)delegate { formTitleChange("Music Library Editor"); });
+        }
+
+        private void formTitleChange(string title)
+        {
+            this.Text = title;
         }
 
         private void deleteEmptyFolders()
@@ -312,7 +370,10 @@ namespace MusicLibraryEditor
             {
                 return;
             }
-            sortMusic();
+            sortFilesToolStripMenuItem.Enabled = false;
+            setLibraryFolderToolStripMenuItem.Enabled = false;
+            Thread MusicSort = new Thread(sortMusic);
+            MusicSort.Start();
             //deleteEmptyFolders();
             load_directory();
         }
