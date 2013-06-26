@@ -249,56 +249,44 @@ namespace MusicLibraryEditor
                     if (file.EndsWith(".mp3"))
                     {
                         TagLib.File track = TagLib.File.Create(file);
-                        string[] artists = track.Tag.AlbumArtists;
-                        if (artists.Length != 0)
+                        string artists = track.Tag.FirstAlbumArtist;
+                        if (artists == "" || artists == null)
                         {
-                            if (artists[0].Contains("/"))
-                            {
-                                string[] artistSplit = artists[0].Split(new char[] { '/' });
-                                artists[0] = "";
-                                foreach (string piece in artistSplit)
-                                {
-                                    artists[0] += piece;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            artists = new string[] {"Unknown Artist"};
-                        }
-                        string album = track.Tag.Album;
-                        if (album != "")
-                        {
-                            if (album.Contains("/"))
-                            {
-                                string[] albumSplit = album.Split(new char[] { '/' });
-                                album = "";
-                                foreach (string piece in albumSplit)
-                                {
-                                    album += piece;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            album = "Unknown Album";
+                            artists = "Unknown Artist";
+                            this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Artist for " + file + Environment.NewLine + txtConsole.Text; });
                         }
 
-                        string artistFolder = artists[0];
+                        string album = track.Tag.Album;
+                        if (album == "" || album == null)
+                        {
+                            album = "Unknown Album";
+                            this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Album Name for " + file + Environment.NewLine + txtConsole.Text; });
+                        }
+
+                        string artistFolder = artists;
                         string albumFolder = album;
-                        if (track.Tag.Year.ToString() != "")
+                        if (track.Tag.Year.ToString() != "0" && track.Tag.Year.ToString() != "" && track.Tag.Year != null)
                         {
                             albumFolder = album + " (" + track.Tag.Year + ")";
                         }
+                        else
+                        {
+                            this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Album Year for " + file + Environment.NewLine + txtConsole.Text; });
+                        }
 
                         string fileName = Path.GetFileName(track.Name);
-                        if (track.Tag.Track.ToString() != "" && track.Tag.Title != "")
+                        if ((track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "" && track.Tag.Track != null) && (track.Tag.Title != "" && track.Tag.Title != null))
                         {
                             fileName = track.Tag.Track + " - " + track.Tag.Title + ".mp3";
                         }
-                        else if (track.Tag.Track.ToString() != "")
+                        else if (track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "" && track.Tag.Track != null)
                         {
                             fileName = track.Tag.Title + ".mp3";
+                            this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Track Number " + file + Environment.NewLine + txtConsole.Text; });
+                        }
+                        else
+                        {
+                            this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Track Title/Number for " + file + Environment.NewLine + txtConsole.Text; });
                         }
 
                         string illegal = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
@@ -318,9 +306,9 @@ namespace MusicLibraryEditor
                         }
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    //this.Invoke((MethodInvoker)delegate { txtConsole.Text += ex; });
+                    this.Invoke((MethodInvoker)delegate { txtConsole.Text = ex + Environment.NewLine + txtConsole.Text; });
                     this.Invoke((MethodInvoker)delegate { txtConsole.Text = "Error moving " + file + Environment.NewLine + txtConsole.Text; });
                 }
                 i--;
