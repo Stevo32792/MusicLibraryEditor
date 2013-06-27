@@ -32,7 +32,6 @@
             this.lstFileLIst = new System.Windows.Forms.ListBox();
             this.gbMetadata = new System.Windows.Forms.GroupBox();
             this.picAlbumArt = new System.Windows.Forms.PictureBox();
-            this.lstTagList = new System.Windows.Forms.ListBox();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.FolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
@@ -90,7 +89,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbMetadata.Controls.Add(this.picAlbumArt);
-            this.gbMetadata.Controls.Add(this.lstTagList);
             this.gbMetadata.Controls.Add(this.txtTitle);
             this.gbMetadata.Controls.Add(this.lblTitle);
             this.gbMetadata.Location = new System.Drawing.Point(392, 6);
@@ -104,29 +102,17 @@
             // 
             this.picAlbumArt.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picAlbumArt.BackColor = System.Drawing.Color.White;
-            this.picAlbumArt.Location = new System.Drawing.Point(262, 54);
+            this.picAlbumArt.Location = new System.Drawing.Point(269, 19);
             this.picAlbumArt.Name = "picAlbumArt";
             this.picAlbumArt.Size = new System.Drawing.Size(110, 107);
             this.picAlbumArt.TabIndex = 0;
             this.picAlbumArt.TabStop = false;
             // 
-            // lstTagList
-            // 
-            this.lstTagList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lstTagList.FormattingEnabled = true;
-            this.lstTagList.IntegralHeight = false;
-            this.lstTagList.Location = new System.Drawing.Point(0, 45);
-            this.lstTagList.Name = "lstTagList";
-            this.lstTagList.Size = new System.Drawing.Size(385, 331);
-            this.lstTagList.TabIndex = 2;
-            // 
             // txtTitle
             // 
             this.txtTitle.Location = new System.Drawing.Point(42, 19);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(337, 20);
+            this.txtTitle.Size = new System.Drawing.Size(221, 20);
             this.txtTitle.TabIndex = 1;
             // 
             // lblTitle
@@ -284,7 +270,6 @@
         private System.Windows.Forms.GroupBox gbMetadata;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.ListBox lstTagList;
         private System.Windows.Forms.PictureBox picAlbumArt;
         private System.Windows.Forms.ListBox lstFileLIst;
         private System.Windows.Forms.FolderBrowserDialog FolderBrowser;
