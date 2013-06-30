@@ -264,7 +264,7 @@ namespace MusicLibraryEditor
                         string fileName = Path.GetFileName(track.Name);
                         if ((track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "" && track.Tag.Track != null) && (track.Tag.Title != "" && track.Tag.Title != null))
                         {
-                            fileName = track.Tag.Track + " - " + track.Tag.Title + ".mp3";
+                            fileName = track.Tag.Track.ToString("000") + " - " + track.Tag.Title + ".mp3";
                         }
                         else if (track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "" && track.Tag.Track != null)
                         {
