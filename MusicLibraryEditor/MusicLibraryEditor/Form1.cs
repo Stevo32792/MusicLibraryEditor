@@ -17,6 +17,8 @@ namespace MusicLibraryEditor
 {
     public partial class Form1 : Form
     {
+        string openFile = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -37,95 +39,120 @@ namespace MusicLibraryEditor
                 folderWatcher.Path = Properties.Settings.Default.libraryLocation;
             }
             load_directory();
-            //Directory.CreateDirectory("C:\\test");
-            //if (!System.IO.File.Exists("C:\\test\\hello.mp3"))
-            //{
-            //    System.IO.File.Copy("C:\\test.mp3", "C:\\test\\hello.mp3");
-            //    System.IO.File.Delete("C:\\test.mp3");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("File Exists");
-            //}
         }
 
         /* LoadTags will load every tag from the file in filename and add it to lstTagList*/
         private void LoadTags(string filename)
         {
-            //lstTagList.Items.Clear();
-            //try
-            //{
-            //    TagLib.File track = TagLib.File.Create(filename);
-            //    lstTagList.Items.Add("Album: " + track.Tag.Album);
-            //    loadTagArray("AlbumArtist: ", track.Tag.AlbumArtists);
-            //    loadTagArray("AlbumArtistSort: ", track.Tag.AlbumArtistsSort);
-            //    lstTagList.Items.Add("AlbumSort: " + track.Tag.AlbumSort);
-            //    lstTagList.Items.Add("AmazonId: " + track.Tag.AmazonId);
-            //    lstTagList.Items.Add("BeatsPerMinute: " + track.Tag.BeatsPerMinute);
-            //    lstTagList.Items.Add("Comment: " + track.Tag.Comment);
-            //    loadTagArray("Composers: ", track.Tag.Composers);
-            //    loadTagArray("ComposersSort: ", track.Tag.ComposersSort);
-            //    lstTagList.Items.Add("Conductor: " + track.Tag.Conductor);
-            //    lstTagList.Items.Add("Copyright: " + track.Tag.Copyright);
-            //    lstTagList.Items.Add("Disc: " + track.Tag.Disc);
-            //    lstTagList.Items.Add("DiscCount: " + track.Tag.DiscCount);
-            //    loadTagArray("Genres: ", track.Tag.Genres);
-            //    lstTagList.Items.Add("Grouping: " + track.Tag.Grouping);
-            //    lstTagList.Items.Add("IsEmpty: " + track.Tag.IsEmpty);
-            //    lstTagList.Items.Add("Lyrics: " + track.Tag.Lyrics);
-            //    lstTagList.Items.Add("MusicBrainzArtistId: " + track.Tag.MusicBrainzArtistId);
-            //    lstTagList.Items.Add("MusicBrainzDiscId: " + track.Tag.MusicBrainzDiscId);
-            //    lstTagList.Items.Add("MusicBrainzReleaseArtistId: " + track.Tag.MusicBrainzReleaseArtistId);
-            //    lstTagList.Items.Add("MusicBrainzReleaseCountry: " + track.Tag.MusicBrainzReleaseCountry);
-            //    lstTagList.Items.Add("MusicBrainzReleaseId: " + track.Tag.MusicBrainzReleaseId);
-            //    lstTagList.Items.Add("MusicBrainzReleaseStatus: " + track.Tag.MusicBrainzReleaseStatus);
-            //    lstTagList.Items.Add("MusicBrainzReleaseType: " + track.Tag.MusicBrainzReleaseType);
-            //    lstTagList.Items.Add("MusicBrainzReackId: " + track.Tag.MusicBrainzTrackId);
-            //    lstTagList.Items.Add("MusicIpId: " + track.Tag.MusicIpId);
-            //    loadTagArray("Performers: ", track.Tag.Performers);
-            //    loadTagArray("PerformersSort: ", track.Tag.PerformersSort);
-            //    lstTagList.Items.Add("TagTypes: " + track.Tag.TagTypes);
-            //    lstTagList.Items.Add("Title: " + track.Tag.Title);
-            //    lstTagList.Items.Add("TitleSort: " + track.Tag.TitleSort);
-            //    lstTagList.Items.Add("Track: " + track.Tag.Track);
-            //    lstTagList.Items.Add("TrackCount: " + track.Tag.TrackCount);
-            //    lstTagList.Items.Add("Year: " + track.Tag.Year);
+            clearMetadataDisplay();
+            openFile = "";
+            if (Path.GetExtension(filename) == ".mp3")
+            {
+                try
+                {
+                    TagLib.File track = TagLib.File.Create(filename);
+                    txtTitle.Text = track.Tag.Title;
+                    txtAlbum.Text = track.Tag.Album;
+                    txtArtists.Text = loadTagArray(track.Tag.AlbumArtists);
+                    txtPerformers.Text = loadTagArray(track.Tag.Performers);
+                    txtComposers.Text = loadTagArray(track.Tag.Composers);
+                    txtGenre.Text = loadTagArray(track.Tag.Genres);
+                    numTrack.Value = track.Tag.Track;
+                    numTrackCount.Value = track.Tag.TrackCount;
+                    numDisc.Value = track.Tag.Disc;
+                    numDiscCount.Value = track.Tag.DiscCount;
 
-            //    // Global to all methods
-            //    System.Drawing.Image currentImage = null;
+                    //    lstTagList.Items.Add("BeatsPerMinute: " + track.Tag.BeatsPerMinute);
+                    //    lstTagList.Items.Add("Comment: " + track.Tag.Comment);
+                    //    lstTagList.Items.Add("Conductor: " + track.Tag.Conductor);
+                    //    lstTagList.Items.Add("Copyright: " + track.Tag.Copyright);
+                    //    lstTagList.Items.Add("Lyrics: " + track.Tag.Lyrics);
+                    //    lstTagList.Items.Add("Year: " + track.Tag.Year);
 
-            //    // In method onclick of the listbox showing all mp3's
-            //    if (track.Tag.Pictures.Length > 0)
-            //    {
-            //        TagLib.IPicture pic = track.Tag.Pictures[0];
-            //        MemoryStream ms = new MemoryStream(pic.Data.Data);
-            //        if (ms != null && ms.Length > 4096)
-            //        {
-            //            currentImage = System.Drawing.Image.FromStream(ms);
-            //            // Load thumbnail into PictureBox
-            //            picAlbumArt.Image = currentImage.GetThumbnailImage(100, 100, null, System.IntPtr.Zero);
-            //        }
-            //        ms.Close();
-            //    }
-            //    else
-            //    {
-            //        picAlbumArt.Image = null;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    lstTagList.Items.Add(ex);
-            //}
+                    // Global to all methods
+                    System.Drawing.Image currentImage = null;
+
+                    // In method onclick of the listbox showing all mp3's
+                    if (track.Tag.Pictures.Length > 0)
+                    {
+                        TagLib.IPicture pic = track.Tag.Pictures[0];
+                        MemoryStream ms = new MemoryStream(pic.Data.Data);
+                        if (ms != null && ms.Length > 4096)
+                        {
+                            currentImage = System.Drawing.Image.FromStream(ms);
+                            // Load thumbnail into PictureBox
+                            picAlbumArt.Image = currentImage.GetThumbnailImage(100, 100, null, System.IntPtr.Zero);
+                        }
+                        ms.Close();
+                    }
+                    else
+                    {
+                        picAlbumArt.Image = null;
+                    }
+                    openFile = filename;
+                }
+                catch
+                {
+                    txtConsole.Text = "Error loading tag info for " + filename + Environment.NewLine + txtConsole.Text;
+                    clearMetadataDisplay();
+                }
+            }
         }
 
-        private void loadTagArray(string tag, String[] collection)
+        private void saveTags(string filename)
+        {
+            if (Path.GetExtension(filename) == ".mp3")
+            {
+                try
+                {
+                    TagLib.File track = TagLib.File.Create(filename);
+                    track.Tag.AlbumArtists = saveTagArray(txtArtists.Text);
+                    track.Save();
+                }
+                catch
+                {
+                    txtConsole.Text = "Error saving tag info for " + filename + Environment.NewLine + txtConsole.Text;
+                }
+            }
+        }
+
+        private void clearMetadataDisplay()
+        {
+            picAlbumArt.Image = null;
+            foreach (Control ctrl in gbMetadata.Controls)
+            {
+                if (ctrl is System.Windows.Forms.TextBox)
+                {
+                    ctrl.Text = "";
+                }
+                else if (ctrl is NumericUpDown)
+                {
+                    NumericUpDown tempNum = (NumericUpDown)ctrl;
+                    tempNum.Value = 0;
+                    ctrl.Text = "";
+                }
+            }
+        }
+
+        private string loadTagArray(String[] collection)
         {
             string tagString = "";
             foreach (string element in collection)
             {
                 tagString += element + "; ";
             }
-            tagString = tagString.Trim(new char[] {';', ' '});
+            tagString = tagString.Trim(new char[] { ';', ' ' });
+            return tagString;
+        }
+
+        private String[] saveTagArray(string items)
+        {
+            String[] tagArray = items.Split(new char[] { ';', ',' });
+            foreach (string item in tagArray)
+            {
+                item.Trim(new char[] { ' ' });
+            }
+            return tagArray;
         }
 
         /* Loads files from FolderBrowser into lstFileLIst */
@@ -150,10 +177,15 @@ namespace MusicLibraryEditor
         /* When file in lstFileLIst is selected, the information from that file is loaded with LoadTags */
         private void lstFileLIst_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void loadSelectedItem()
+        {
             if (lstFileLIst.SelectedItem == null)
             {
             }
-            else if (Regex.Match(lstFileLIst.SelectedItem.ToString(), @"File").Groups[0].Value == "File") 
+            else if (Regex.Match(lstFileLIst.SelectedItem.ToString(), @"File").Groups[0].Value == "File")
             {
                 LoadTags(FolderBrowser.SelectedPath.ToString() + "\\" + lstFileLIst.SelectedItem.ToString().Substring(6));
             }
@@ -239,8 +271,16 @@ namespace MusicLibraryEditor
                         string artists = track.Tag.FirstAlbumArtist;
                         if (artists == "" || artists == null)
                         {
-                            artists = "Unknown Artist";
-                            this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Artist for " + file + Environment.NewLine + txtConsole.Text; });
+                            if (track.Tag.FirstPerformer == "" || track.Tag.FirstPerformer == null)
+                            {
+                                artists = track.Tag.FirstPerformer;
+                                this.Invoke((MethodInvoker)delegate { txtConsole.Text = "Performer was used for artist for " + file + Environment.NewLine + txtConsole.Text; });
+                            }
+                            else
+                            {
+                                artists = "Unknown Artist";
+                                this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Artist for " + file + Environment.NewLine + txtConsole.Text; });
+                            }
                         }
 
                         string album = track.Tag.Album;
@@ -252,7 +292,7 @@ namespace MusicLibraryEditor
 
                         string artistFolder = artists;
                         string albumFolder = album;
-                        if (track.Tag.Year.ToString() != "0" && track.Tag.Year.ToString() != "" && track.Tag.Year != null)
+                        if (track.Tag.Year.ToString() != "0" && track.Tag.Year.ToString() != "")
                         {
                             albumFolder = album + " (" + track.Tag.Year + ")";
                         }
@@ -262,11 +302,11 @@ namespace MusicLibraryEditor
                         }
 
                         string fileName = Path.GetFileName(track.Name);
-                        if ((track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "" && track.Tag.Track != null) && (track.Tag.Title != "" && track.Tag.Title != null))
+                        if ((track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "") && (track.Tag.Title != "" && track.Tag.Title != null))
                         {
                             fileName = track.Tag.Track.ToString("000") + " - " + track.Tag.Title + ".mp3";
                         }
-                        else if (track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "" && track.Tag.Track != null)
+                        else if (track.Tag.Track.ToString() != "0" && track.Tag.Track.ToString() != "")
                         {
                             fileName = track.Tag.Title + ".mp3";
                             this.Invoke((MethodInvoker)delegate { txtConsole.Text = "No Track Number " + file + Environment.NewLine + txtConsole.Text; });
@@ -356,6 +396,33 @@ namespace MusicLibraryEditor
         private void folderWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             load_directory();
+        }
+
+        private void saveTagToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveTags(openFile);
+            LoadTags(openFile);
+        }
+
+        private void lstFileLIst_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down)
+            {
+                if (lstFileLIst.SelectedIndex == -1)
+                {
+                    lstFileLIst.SelectedIndex = 1;
+                    e.SuppressKeyPress = true;
+                }
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                loadSelectedItem();
+            }
+        }
+
+        private void lstFileLIst_MouseUp(object sender, MouseEventArgs e)
+        {
+            loadSelectedItem();
         }
     }
 }
