@@ -58,6 +58,7 @@
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setLibraryFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveTagToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@
             this.tpEditor = new System.Windows.Forms.TabPage();
             this.tpConsole = new System.Windows.Forms.TabPage();
             this.txtConsole = new System.Windows.Forms.TextBox();
-            this.saveTagToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbFileList.SuspendLayout();
             this.gbMetadata.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDiscCount)).BeginInit();
@@ -357,6 +357,13 @@
             this.setLibraryFolderToolStripMenuItem.Text = "Set Library Folder";
             this.setLibraryFolderToolStripMenuItem.Click += new System.EventHandler(this.setLibraryFolderToolStripMenuItem_Click);
             // 
+            // saveTagToolStripMenuItem
+            // 
+            this.saveTagToolStripMenuItem.Name = "saveTagToolStripMenuItem";
+            this.saveTagToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.saveTagToolStripMenuItem.Text = "Save Tag";
+            this.saveTagToolStripMenuItem.Click += new System.EventHandler(this.saveTagToolStripMenuItem_Click);
+            // 
             // sortFilesToolStripMenuItem
             // 
             this.sortFilesToolStripMenuItem.Name = "sortFilesToolStripMenuItem";
@@ -375,6 +382,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // FileBrowser
             // 
@@ -432,13 +440,6 @@
             this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtConsole.Size = new System.Drawing.Size(839, 384);
             this.txtConsole.TabIndex = 0;
-            // 
-            // saveTagToolStripMenuItem
-            // 
-            this.saveTagToolStripMenuItem.Name = "saveTagToolStripMenuItem";
-            this.saveTagToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.saveTagToolStripMenuItem.Text = "Save Tag";
-            this.saveTagToolStripMenuItem.Click += new System.EventHandler(this.saveTagToolStripMenuItem_Click);
             // 
             // Form1
             // 

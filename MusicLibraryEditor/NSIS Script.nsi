@@ -35,8 +35,8 @@ Section "Music Library Editor (required)" ;No components page, name is not impor
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "MusicLibraryEditor\bin\Release\MusicLibraryEditor.exe"
-  File "MusicLibraryEditor\bin\Release\taglib-sharp.dll"
+  File "MusicLibraryEditor\bin\Debug\MusicLibraryEditor.exe"
+  File "MusicLibraryEditor\bin\Debug\taglib-sharp.dll"
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\MusicLibraryEditor "Install_Dir" "$INSTDIR"
