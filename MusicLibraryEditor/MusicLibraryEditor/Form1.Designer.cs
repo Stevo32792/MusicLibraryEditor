@@ -31,6 +31,7 @@
             this.gbFileList = new System.Windows.Forms.GroupBox();
             this.lstFileLIst = new System.Windows.Forms.ListBox();
             this.gbMetadata = new System.Windows.Forms.GroupBox();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.lblComposers = new System.Windows.Forms.Label();
             this.txtComposers = new System.Windows.Forms.TextBox();
             this.lblGenre = new System.Windows.Forms.Label();
@@ -75,7 +76,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numTrackCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTrack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.folderWatcher)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tpEditor.SuspendLayout();
@@ -105,7 +105,6 @@
             this.lstFileLIst.Name = "lstFileLIst";
             this.lstFileLIst.Size = new System.Drawing.Size(381, 360);
             this.lstFileLIst.TabIndex = 0;
-            this.lstFileLIst.SelectedIndexChanged += new System.EventHandler(this.lstFileLIst_SelectedIndexChanged);
             this.lstFileLIst.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstFileLIst_KeyDown);
             this.lstFileLIst.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lstFileLIst_MouseUp);
             // 
@@ -114,6 +113,7 @@
             this.gbMetadata.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbMetadata.Controls.Add(this.btnSearch);
             this.gbMetadata.Controls.Add(this.lblComposers);
             this.gbMetadata.Controls.Add(this.txtComposers);
             this.gbMetadata.Controls.Add(this.lblGenre);
@@ -141,6 +141,16 @@
             this.gbMetadata.TabIndex = 1;
             this.gbMetadata.TabStop = false;
             this.gbMetadata.Text = "Metadata";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(321, 310);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(120, 23);
+            this.btnSearch.TabIndex = 21;
+            this.btnSearch.Text = "Search For Metadata";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // lblComposers
             // 
@@ -460,8 +470,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numTrackCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTrack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picAlbumArt)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.folderWatcher)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tpEditor.ResumeLayout(false);
@@ -514,6 +522,7 @@
         private System.Windows.Forms.TextBox txtComposers;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveTagToolStripMenuItem;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

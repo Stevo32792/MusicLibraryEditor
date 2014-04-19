@@ -37,6 +37,8 @@ Section "Music Library Editor (required)" ;No components page, name is not impor
   ; Put file there
   File "MusicLibraryEditor\bin\Debug\MusicLibraryEditor.exe"
   File "MusicLibraryEditor\bin\Debug\taglib-sharp.dll"
+  File "MusicLibraryEditor\bin\Debug\Hqub.MusicBrainze.API.dll"
+  File "MusicLibraryEditor\bin\Debug\noart.png"
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\MusicLibraryEditor "Install_Dir" "$INSTDIR"
@@ -65,6 +67,8 @@ Section "Uninstall"
   ; Remove files and uninstaller
   Delete $INSTDIR\MusicLibraryEditor.exe
   Delete $INSTDIR\taglib-sharp.dll
+  Delete $INSTDIR\Hqub.MusicBrainze.API.dll
+  Delete $INSTDIR\noart.png
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
